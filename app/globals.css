@@ -1,0 +1,102 @@
+@import "tailwindcss";
+
+:root {
+  --background: #f7f8f6;
+  --surface: #ffffff;
+  --foreground: #16201b;
+  --muted: #56645c;
+  --border: #dde3de;
+  --brand: #0b6b3f;
+  --brand-contrast: #ffffff;
+  --brand-soft: #e5f2ea;
+  --ssnit: #2f6fb5;
+  --paye: #c0562b;
+  --bonus-tax: #8a5cb8;
+  --notice-bg: #fff6e0;
+  --notice-border: #e9c46a;
+  --danger: #b42318;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0f1512;
+    --surface: #17201b;
+    --foreground: #e6ece8;
+    --muted: #9aa8a0;
+    --border: #2b3731;
+    --brand: #4fc788;
+    --brand-contrast: #0b1a12;
+    --brand-soft: #1c3226;
+    --ssnit: #6ea8e6;
+    --paye: #ec8a5f;
+    --bonus-tax: #b995e0;
+    --notice-bg: #2d2615;
+    --notice-border: #8c7032;
+    --danger: #f97066;
+  }
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-brand: var(--brand);
+  --color-brand-contrast: var(--brand-contrast);
+  --color-brand-soft: var(--brand-soft);
+  --color-ssnit: var(--ssnit);
+  --color-paye: var(--paye);
+  --color-bonus-tax: var(--bonus-tax);
+  --color-notice-bg: var(--notice-bg);
+  --color-notice-border: var(--notice-border);
+  --color-danger: var(--danger);
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+}
+
+/* Long-form article content */
+.prose {
+  line-height: 1.7;
+}
+.prose h2 {
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+  font-size: 1.375rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+.prose h3 {
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+.prose p,
+.prose ul,
+.prose ol {
+  margin-bottom: 1rem;
+}
+.prose ul {
+  list-style: disc;
+  padding-left: 1.25rem;
+}
+.prose ol {
+  list-style: decimal;
+  padding-left: 1.25rem;
+}
+.prose li {
+  margin-bottom: 0.25rem;
+}
+.prose a {
+  color: var(--brand);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.prose code {
+  font-size: 0.9em;
+}
