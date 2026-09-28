@@ -9,10 +9,11 @@
 - Once verified, change each ruleset's `status` to `"verified-official"` (the "not yet checked" wording then disappears from results).
 - Register a production domain and set `NEXT_PUBLIC_SITE_URL` in the hosting environment (canonical URLs, sitemap and robots currently fall back to `http://localhost:3000`).
 - Create a hosting account (e.g. Vercel) and connect this repository.
-- Apply for Google AdSense when there is traffic/content; then set `NEXT_PUBLIC_ADSENSE_CLIENT` and `NEXT_PUBLIC_ADSENSE_SLOT`, add `public/ads.txt`, and decide on a consent (CMP) solution if serving users in regions that require one.
+- Apply for Google AdSense when there is traffic/content; then set `NEXT_PUBLIC_ADSENSE_CLIENT` and `NEXT_PUBLIC_ADSENSE_SLOT`, and add `public/ads.txt`.
 - Review the privacy page and disclaimer wording for legal/business suitability.
-- Create a Google Analytics 4 property and set `NEXT_PUBLIC_GA_MEASUREMENT_ID` in the hosting environment. Optionally mark `calculation_completed` as a key event in GA. GA uses cookies, so include it in the consent (CMP) decision above.
+- Create a Google Analytics 4 property and set `NEXT_PUBLIC_GA_MEASUREMENT_ID` in the hosting environment. Optionally mark `calculation_completed` as a key event in GA.
 - Submit the sitemap to Google Search Console once the domain is live.
+- If the site will serve visitors in the EEA, UK or Switzerland, Google requires a Google-certified consent platform (IAB TCF) for AdSense there — e.g. enable AdSense “Privacy & messaging” for those regions. The built-in banner is fine for Ghana but is not TCF-certified.
 
 ## Optional improvements
 
@@ -28,6 +29,7 @@
 
 ## Completed
 
+- Cookie consent banner with Google Consent Mode v2: shown only when GA or AdSense is configured; ads always show, while personalised ads and analytics cookies wait for “Accept”; “No thanks” gives non-personalised ads; choice stored locally and changeable via “Cookie settings” in the footer (verified in browser)
 - Next.js 16 + TypeScript + Tailwind + Zod app scaffolded; all pages statically rendered.
 - Pure calculation engine in integer pesewas: monthly/annual input, SSNIT with cap, taxable income, progressive PAYE with per-band breakdown, bonus flat-rate/excess rule, net pay, effective rates, assumptions and exclusions.
 - Versioned, schema-validated tax configuration (2026 Jan–Aug, 2025) with verification status, sources and a superseded notice.

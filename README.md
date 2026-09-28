@@ -94,6 +94,10 @@ Google Analytics 4 loads only when `NEXT_PUBLIC_GA_MEASUREMENT_ID` is set (via `
 
 Salary values never appear in URLs or events; `tests/analytics.test.tsx` enforces this.
 
+## Cookie consent
+
+When GA or AdSense is configured, a banner asks for consent (Google Consent Mode v2, `lib/consent.ts`). Ads always show: `ad_storage` is granted by default so non-personalised ads work. `ad_user_data`, `ad_personalization` and `analytics_storage` stay denied until the visitor clicks “Accept”; “No thanks” also sets AdSense `requestNonPersonalizedAds`. The choice is stored in `localStorage` and can be changed from “Cookie settings” in the footer.
+
 ## Deployment
 
 Any Next.js host (e.g. Vercel). No database, no server-side secrets, no API routes.

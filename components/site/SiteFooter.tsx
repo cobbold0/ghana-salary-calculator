@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { PAGES, SITE_NAME } from "@/lib/site";
+import { ConsentSettingsButton } from "./ConsentBanner";
 
 export function SiteFooter() {
   return (
@@ -14,6 +15,9 @@ export function SiteFooter() {
                 </Link>
               </li>
             ))}
+            <li>
+              <ConsentSettingsButton />
+            </li>
           </ul>
         </nav>
         <p className="mt-6 max-w-3xl">

@@ -20,13 +20,16 @@ export default function Page() {
       <h2>Analytics</h2>
       <p>
         We may use Google Analytics to understand how the site is used — for example, which pages are visited and whether people choose monthly
-        or annual salaries. Google Analytics uses cookies. We never send the amounts you enter to Google Analytics.
+        or annual salaries. Analytics cookies are only used if you accept them in the cookie banner. We never send the amounts you enter to Google Analytics.
       </p>
       <h2>Advertising</h2>
       <p>
-        If advertising is shown on this site, it is provided by third parties such as Google, which may use cookies to show and measure ads. You can
-        manage personalised advertising in your Google ad settings. Ads are kept separate from the calculator.
+        Advertising is provided by third parties such as Google and is shown whether or not you accept cookies. If you accept, ads may be
+        personalised to your interests; if you choose “No thanks”, you see non-personalised ads, which may still use cookies for things like
+        limiting how often an ad appears and preventing fraud. Ads are kept separate from the calculator.
       </p>
+      <h2>Changing your choice</h2>
+      <p>Use “Cookie settings” at the bottom of any page to change your cookie choice at any time.</p>
       <h2>Changes</h2>
       <p>If we change how we handle data, we will update this page.</p>
     </article>

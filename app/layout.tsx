@@ -1,9 +1,11 @@
 import type { Metadata, Viewport } from "next";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import Script from "next/script";
+import { ConsentBanner } from "@/components/site/ConsentBanner";
 import { SiteFooter } from "@/components/site/SiteFooter";
 import { SiteHeader } from "@/components/site/SiteHeader";
 import { GA_ID } from "@/lib/analytics";
+import { ADSENSE_CLIENT as adsenseClient, CONSENT_NEEDED, consentDefaultScript } from "@/lib/consent";
 import { SITE_NAME, SITE_URL } from "@/lib/site";
 import "./globals.css";
 
@@ -21,12 +23,15 @@ export const viewport: Viewport = {
   ],
 };
 
-const adsenseClient = process.env.NEXT_PUBLIC_ADSENSE_CLIENT;
-
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en-GH" className="h-full antialiased">
       <body className="flex min-h-full flex-col font-sans">
+        {CONSENT_NEEDED && (
+          <Script id="consent-default" strategy="beforeInteractive">
+            {consentDefaultScript}
+          </Script>
+        )}
         <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded focus:bg-surface focus:px-3 focus:py-2">
           Skip to content
         </a>
@@ -35,6 +40,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           {children}
         </main>
         <SiteFooter />
+        <ConsentBanner />
         {adsenseClient && (
           <Script
             src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${adsenseClient}`}

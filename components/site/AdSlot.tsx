@@ -1,18 +1,13 @@
 "use client";
 
 import { useEffect } from "react";
+import { ADSENSE_CLIENT as client } from "@/lib/consent";
 
-declare global {
-  interface Window {
-    adsbygoogle?: unknown[];
-  }
-}
-
-const client = process.env.NEXT_PUBLIC_ADSENSE_CLIENT;
 const slot = process.env.NEXT_PUBLIC_ADSENSE_SLOT;
 
 /**
- * A clearly labelled ad unit. Renders nothing until AdSense is configured.
+ * A clearly labelled ad unit. Renders nothing until AdSense is configured. Ads show whether or
+ * not the visitor consents; without consent they are non-personalised (see lib/consent.ts).
  * Only place this in content areas — never inside or between calculator inputs and results.
  */
 export function AdSlot() {
