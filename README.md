@@ -23,13 +23,13 @@ Copy `.env.example` to `.env.local` and set `NEXT_PUBLIC_SITE_URL` before a prod
 ## Structure
 
 ```text
-app/                    routes: calculator home, net-to-gross, 8 SEO/content pages, privacy, sitemap.ts, robots.ts
-components/calculator/  SalaryCalculator, NetToGrossCalculator (client forms) + SalaryResults (breakdown, explanations)
+app/                    routes: calculator home, net-to-gross, salary comparison, 8 SEO/content pages, privacy, sitemap.ts, robots.ts
+components/calculator/  SalaryCalculator, NetToGrossCalculator, SalaryComparison (client forms) + SalaryResults (breakdown, explanations)
 components/salary/      config-driven content: PAYE band table, SSNIT facts, worked examples
 components/site/        header, footer, Article layout, JSON-LD, AdSlot
 data/tax/rulesets.ts    versioned statutory configuration (the only place rates live)
 lib/tax/                ruleset schema (Zod) + registry
-lib/calculations/       pure engine: paye.ts, ssnit.ts, salary.ts, net-to-gross.ts
+lib/calculations/       pure engine: paye.ts, ssnit.ts, salary.ts, net-to-gross.ts, compare.ts
 lib/validation/         Zod schema for form input
 lib/money.ts            pesewa parsing, rounding, GH₵ formatting
 tests/                  engine, config, validation and calculator integration tests
@@ -51,6 +51,10 @@ The result includes per-band PAYE detail, SSNIT base/cap, bonus split, effective
 ### Net to gross
 
 `netToGross(input)` binary-searches the smallest monthly basic salary whose forward-calculated take-home pay reaches the target. Monthly take-home pay never decreases and rises by at most one pesewa per pesewa of basic salary, so the result hits the target exactly (unless fixed allowances alone exceed it). Annual targets are split into 12 months, rounded up, so the annual take-home pay may exceed the target by up to 11 pesewas.
+
+### Salary comparison
+
+`compareOffers(a, b)` runs the forward engine on both packages under the same tax rules (offers may use different frequencies) and returns both results plus the annual (including bonuses) and regular-month take-home differences. The higher offer is decided on annual take-home pay.
 
 ### Rounding policy
 
@@ -86,6 +90,7 @@ Google Analytics 4 loads only when `NEXT_PUBLIC_GA_MEASUREMENT_ID` is set (via `
 | `salary_period_selected` | `period` |
 | `calculation_completed` (once per visit) | `period`, `has_allowances`, `has_bonus`, `tax_rules` |
 | `net_to_gross_completed` (once per visit) | `period`, `has_allowances`, `tax_rules` |
+| `comparison_completed` (once per visit) | `tax_rules` |
 
 Salary values never appear in URLs or events; `tests/analytics.test.tsx` enforces this.
 

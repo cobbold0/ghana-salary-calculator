@@ -16,6 +16,7 @@ export const PAGES: SitePage[] = [
   { path: "/take-home-pay", label: "Take-home pay" },
   { path: "/gross-to-net", label: "Gross to net salary" },
   { path: "/net-to-gross", label: "Net to gross calculator" },
+  { path: "/salary-comparison", label: "Compare salary offers" },
   { path: "/paye-calculator", label: "PAYE calculator" },
   { path: "/ssnit-calculator", label: "SSNIT calculator" },
   { path: "/salary-breakdown", label: "Salary breakdown & payslips" },

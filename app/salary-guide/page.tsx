@@ -50,7 +50,9 @@ export default function Page() {
       <h2>Comparing two job offers</h2>
       <ol>
         <li>Put both offers on the same basis — monthly or annual.</li>
-        <li>Enter each into the calculator and note the estimated take-home pay.</li>
+        <li>
+          Enter both into the <Link href="/salary-comparison">salary comparison tool</Link> to see the difference in take-home pay.
+        </li>
         <li>Add the value of benefits that save you money (transport, meals, medical cover, housing).</li>
         <li>Consider pension: a higher basic salary means higher SSNIT contributions.</li>
         <li>Look beyond pay: growth, job security, commute and working hours matter too.</li>

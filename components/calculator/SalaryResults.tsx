@@ -20,19 +20,7 @@ export function SalaryResults({ result, view, onViewChange }: { result: SalaryRe
     <div className="rounded-2xl border border-border bg-surface p-5 shadow-sm sm:p-6">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <h2 className="text-sm font-medium text-muted">Estimated take-home pay</h2>
-        <div role="group" aria-label="Show amounts" className="grid grid-cols-2 gap-1 rounded-lg bg-background p-1 text-sm">
-          {(["monthly", "annual"] as const).map((v) => (
-            <button
-              key={v}
-              type="button"
-              aria-pressed={view === v}
-              onClick={() => onViewChange(v)}
-              className="rounded-md px-3 py-1.5 font-medium text-muted aria-pressed:bg-surface aria-pressed:text-foreground aria-pressed:shadow-sm focus-visible:outline-2 focus-visible:outline-brand"
-            >
-              {v === "monthly" ? "Monthly" : "Annual"}
-            </button>
-          ))}
-        </div>
+        <ViewToggle view={view} onViewChange={onViewChange} />
       </div>
       <p className="mt-2 text-4xl font-bold tabular-nums text-brand sm:text-5xl" data-testid="net-pay">
         {formatGHS(p.net)}
@@ -169,6 +157,24 @@ export function SalaryResults({ result, view, onViewChange }: { result: SalaryRe
         {result.ruleset.notice && <p className="mt-2">{result.ruleset.notice}</p>}
         <p className="mt-2">This is an estimate, not a payslip. Your employer&apos;s payroll may differ.</p>
       </div>
+    </div>
+  );
+}
+
+export function ViewToggle({ view, onViewChange }: { view: Frequency; onViewChange: (v: Frequency) => void }) {
+  return (
+    <div role="group" aria-label="Show amounts" className="grid grid-cols-2 gap-1 rounded-lg bg-background p-1 text-sm">
+      {(["monthly", "annual"] as const).map((v) => (
+        <button
+          key={v}
+          type="button"
+          aria-pressed={view === v}
+          onClick={() => onViewChange(v)}
+          className="rounded-md px-3 py-1.5 font-medium text-muted aria-pressed:bg-surface aria-pressed:text-foreground aria-pressed:shadow-sm focus-visible:outline-2 focus-visible:outline-brand"
+        >
+          {v === "monthly" ? "Monthly" : "Annual"}
+        </button>
+      ))}
     </div>
   );
 }
