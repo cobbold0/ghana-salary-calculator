@@ -17,6 +17,11 @@ export default function Page() {
       </p>
       <h2>No account needed</h2>
       <p>We do not ask for your name, phone number, email address or employer.</p>
+      <h2>Analytics</h2>
+      <p>
+        We may use Google Analytics to understand how the site is used — for example, which pages are visited and whether people choose monthly
+        or annual salaries. Google Analytics uses cookies. We never send the amounts you enter to Google Analytics.
+      </p>
       <h2>Advertising</h2>
       <p>
         If advertising is shown on this site, it is provided by third parties such as Google, which may use cookies to show and measure ads. You can

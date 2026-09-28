@@ -18,7 +18,7 @@ npm run dev          # http://localhost:3000
 | `npm test` | Vitest unit + integration tests |
 | `npm run build` | Production build (all pages static) |
 
-Copy `.env.example` to `.env.local` and set `NEXT_PUBLIC_SITE_URL` before a production build — it drives canonical URLs, Open Graph, `sitemap.xml` and `robots.txt`. AdSense variables are optional; with none set, no ads or ad scripts load.
+Copy `.env.example` to `.env.local` and set `NEXT_PUBLIC_SITE_URL` before a production build — it drives canonical URLs, Open Graph, `sitemap.xml` and `robots.txt`. AdSense and Google Analytics variables are optional; with none set, no ad or analytics scripts load.
 
 ## Structure
 
@@ -71,6 +71,18 @@ Current rulesets: **2026 (1 Jan – 31 Aug)** (default) and **2025**, both `seco
 ## Monetization
 
 `AdSlot` renders only when `NEXT_PUBLIC_ADSENSE_CLIENT` and `NEXT_PUBLIC_ADSENSE_SLOT` are set. It is labelled "Advertisement" and placed only in content areas below the calculator — never among inputs or results.
+
+## Analytics
+
+Google Analytics 4 loads only when `NEXT_PUBLIC_GA_MEASUREMENT_ID` is set (via `@next/third-parties`). Custom events go through `lib/analytics.ts`, whose types allow only non-monetary parameters:
+
+| Event | Parameters |
+| --- | --- |
+| `calculator_opened` | — |
+| `salary_period_selected` | `period` |
+| `calculation_completed` (once per visit) | `period`, `has_allowances`, `has_bonus`, `tax_rules` |
+
+Salary values never appear in URLs or events; `tests/analytics.test.tsx` enforces this.
 
 ## Deployment
 

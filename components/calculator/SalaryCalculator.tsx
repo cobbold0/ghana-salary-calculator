@@ -1,6 +1,7 @@
 "use client";
 
-import { useId, useMemo, useState } from "react";
+import { useEffect, useId, useMemo, useRef, useState } from "react";
+import { track } from "@/lib/analytics";
 import { calculateSalary, type Frequency } from "@/lib/calculations/salary";
 import { DEFAULT_RULESET_ID, listRulesets } from "@/lib/tax";
 import { parseSalaryForm, type SalaryFormErrors, type SalaryFormValues } from "@/lib/validation/salary-input";
@@ -19,6 +20,19 @@ export function SalaryCalculator({ headingLevel = "h2" }: { headingLevel?: "h1" 
 
   const parsed = useMemo(() => parseSalaryForm(form), [form]);
   const result = useMemo(() => (parsed.ok ? calculateSalary(parsed.input) : null), [parsed]);
+
+  useEffect(() => track({ name: "calculator_opened" }), []);
+  // Results update on every keystroke; report only the first completed calculation per visit.
+  const reported = useRef(false);
+  useEffect(() => {
+    if (!parsed.ok || reported.current) return;
+    reported.current = true;
+    const { frequency, allowances, annualBonus, rulesetId } = parsed.input;
+    track({
+      name: "calculation_completed",
+      params: { period: frequency, has_allowances: !!allowances, has_bonus: !!annualBonus, tax_rules: rulesetId ?? "" },
+    });
+  }, [parsed]);
   // An empty salary is the starting state, not an error worth shouting about.
   const errors: SalaryFormErrors = parsed.ok ? {} : { ...parsed.errors };
   if (form.basicSalary.trim() === "") delete errors.basicSalary;
@@ -64,6 +78,7 @@ export function SalaryCalculator({ headingLevel = "h2" }: { headingLevel?: "h1" 
                   onChange={() => {
                     set("frequency", f);
                     setView(f);
+                    track({ name: "salary_period_selected", params: { period: f } });
                   }}
                   className="sr-only"
                 />
