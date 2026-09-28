@@ -11,13 +11,14 @@ export function Article({
   path,
   title,
   intro,
-  calculator = "top",
+  calculator = <SalaryCalculator />,
   children,
 }: {
   path: string;
   title: string;
   intro: React.ReactNode;
-  calculator?: "top" | "none";
+  /** Calculator shown above the article; `null` for none. */
+  calculator?: React.ReactNode;
   children: React.ReactNode;
 }) {
   const related = PAGES.filter((p) => p.path !== path && p.path !== "/privacy");
@@ -36,7 +37,7 @@ export function Article({
         <h1 className="text-3xl font-bold leading-tight sm:text-4xl">{title}</h1>
         <div className="mt-3 text-lg text-muted">{intro}</div>
       </header>
-      {calculator === "top" && <SalaryCalculator />}
+      {calculator}
       <article className="prose mt-10 max-w-3xl">{children}</article>
       <AdSlot />
       <nav aria-labelledby="related-title" className="mt-10 max-w-3xl">

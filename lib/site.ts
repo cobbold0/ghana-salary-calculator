@@ -15,6 +15,7 @@ export const PAGES: SitePage[] = [
   { path: "/ghana-salary-calculator", label: "Ghana tax rules & method" },
   { path: "/take-home-pay", label: "Take-home pay" },
   { path: "/gross-to-net", label: "Gross to net salary" },
+  { path: "/net-to-gross", label: "Net to gross calculator" },
   { path: "/paye-calculator", label: "PAYE calculator" },
   { path: "/ssnit-calculator", label: "SSNIT calculator" },
   { path: "/salary-breakdown", label: "Salary breakdown & payslips" },

@@ -61,8 +61,8 @@ export default function Page() {
 
       <h2>Going the other way: net to gross</h2>
       <p>
-        If you know the take-home pay you need, try different gross salaries in the calculator above until the estimated take-home pay matches. This
-        is useful when negotiating — see our <Link href="/salary-guide">salary guide</Link>.
+        If you know the take-home pay you need, the <Link href="/net-to-gross">net-to-gross calculator</Link> works out the gross salary that
+        delivers it. This is useful when negotiating — see our <Link href="/salary-guide">salary guide</Link>.
       </p>
     </Article>
   );

@@ -9,7 +9,8 @@ export const GA_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
 type AnalyticsEvent =
   | { name: "calculator_opened" }
   | { name: "salary_period_selected"; params: { period: "monthly" | "annual" } }
-  | { name: "calculation_completed"; params: { period: "monthly" | "annual"; has_allowances: boolean; has_bonus: boolean; tax_rules: string } };
+  | { name: "calculation_completed"; params: { period: "monthly" | "annual"; has_allowances: boolean; has_bonus: boolean; tax_rules: string } }
+  | { name: "net_to_gross_completed"; params: { period: "monthly" | "annual"; has_allowances: boolean; tax_rules: string } };
 
 export function track(event: AnalyticsEvent) {
   if (!GA_ID) return;

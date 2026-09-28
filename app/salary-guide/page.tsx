@@ -16,7 +16,7 @@ export default function Page() {
       path={path}
       title={title}
       intro="The key salary terms to understand before you accept a job offer, ask for a raise or plan your budget."
-      calculator="none"
+      calculator={null}
     >
       <h2>Gross salary vs net salary</h2>
       <p>
@@ -58,7 +58,10 @@ export default function Page() {
 
       <h2>Negotiating salary</h2>
       <ul>
-        <li>Decide the take-home pay you need, then use the calculator to find the gross salary that delivers it.</li>
+        <li>
+          Decide the take-home pay you need, then use the <Link href="/net-to-gross">net-to-gross calculator</Link> to find the gross salary that
+          delivers it.
+        </li>
         <li>Ask for the breakdown of basic salary and allowances in writing.</li>
         <li>Clarify when salary reviews happen and whether bonuses are guaranteed or discretionary.</li>
       </ul>

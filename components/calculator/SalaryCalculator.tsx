@@ -7,7 +7,7 @@ import { DEFAULT_RULESET_ID, listRulesets } from "@/lib/tax";
 import { parseSalaryForm, type SalaryFormErrors, type SalaryFormValues } from "@/lib/validation/salary-input";
 import { SalaryResults } from "./SalaryResults";
 
-const RULESETS = listRulesets().map(({ id, label }) => ({ id, label }));
+export const RULESETS = listRulesets().map(({ id, label }) => ({ id, label }));
 
 type FormState = Required<SalaryFormValues>;
 
@@ -62,31 +62,15 @@ export function SalaryCalculator({ headingLevel = "h2" }: { headingLevel?: "h1" 
           autoFocus={headingLevel === "h1"}
         />
 
-        <fieldset className="mt-5">
-          <legend className="mb-2 text-sm font-medium">Salary is paid</legend>
-          <div className="grid grid-cols-2 gap-1 rounded-xl bg-background p-1">
-            {(["monthly", "annual"] as const).map((f) => (
-              <label
-                key={f}
-                className="cursor-pointer rounded-lg px-3 py-2.5 text-center text-sm font-medium text-muted has-checked:bg-surface has-checked:text-foreground has-checked:shadow-sm has-focus-visible:outline-2 has-focus-visible:outline-brand"
-              >
-                <input
-                  type="radio"
-                  name={`${id}-frequency`}
-                  value={f}
-                  checked={form.frequency === f}
-                  onChange={() => {
-                    set("frequency", f);
-                    setView(f);
-                    track({ name: "salary_period_selected", params: { period: f } });
-                  }}
-                  className="sr-only"
-                />
-                {f === "monthly" ? "Monthly" : "Annually"}
-              </label>
-            ))}
-          </div>
-        </fieldset>
+        <FrequencyField
+          name={`${id}-frequency`}
+          value={form.frequency}
+          onChange={(f) => {
+            set("frequency", f);
+            setView(f);
+            track({ name: "salary_period_selected", params: { period: f } });
+          }}
+        />
 
         <details className="group mt-5 rounded-xl border border-border">
           <summary className="cursor-pointer list-none rounded-xl px-4 py-3 text-sm font-medium marker:hidden focus-visible:outline-2 focus-visible:outline-brand">
@@ -150,7 +134,7 @@ export function SalaryCalculator({ headingLevel = "h2" }: { headingLevel?: "h1" 
   );
 }
 
-function AmountField(props: {
+export function AmountField(props: {
   id: string;
   label: string;
   hint: string;
@@ -192,5 +176,34 @@ function AmountField(props: {
         </p>
       )}
     </div>
+  );
+}
+
+export function FrequencyField({
+  name,
+  value,
+  onChange,
+  legend = "Salary is paid",
+}: {
+  name: string;
+  value: Frequency;
+  onChange: (value: Frequency) => void;
+  legend?: string;
+}) {
+  return (
+    <fieldset className="mt-5">
+      <legend className="mb-2 text-sm font-medium">{legend}</legend>
+      <div className="grid grid-cols-2 gap-1 rounded-xl bg-background p-1">
+        {(["monthly", "annual"] as const).map((f) => (
+          <label
+            key={f}
+            className="cursor-pointer rounded-lg px-3 py-2.5 text-center text-sm font-medium text-muted has-checked:bg-surface has-checked:text-foreground has-checked:shadow-sm has-focus-visible:outline-2 has-focus-visible:outline-brand"
+          >
+            <input type="radio" name={name} value={f} checked={value === f} onChange={() => onChange(f)} className="sr-only" />
+            {f === "monthly" ? "Monthly" : "Annually"}
+          </label>
+        ))}
+      </div>
+    </fieldset>
   );
 }

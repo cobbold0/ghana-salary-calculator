@@ -23,13 +23,13 @@ Copy `.env.example` to `.env.local` and set `NEXT_PUBLIC_SITE_URL` before a prod
 ## Structure
 
 ```text
-app/                    routes: calculator home, 8 SEO/content pages, privacy, sitemap.ts, robots.ts
-components/calculator/  SalaryCalculator (client form) + SalaryResults (breakdown, explanations)
+app/                    routes: calculator home, net-to-gross, 8 SEO/content pages, privacy, sitemap.ts, robots.ts
+components/calculator/  SalaryCalculator, NetToGrossCalculator (client forms) + SalaryResults (breakdown, explanations)
 components/salary/      config-driven content: PAYE band table, SSNIT facts, worked examples
 components/site/        header, footer, Article layout, JSON-LD, AdSlot
 data/tax/rulesets.ts    versioned statutory configuration (the only place rates live)
 lib/tax/                ruleset schema (Zod) + registry
-lib/calculations/       pure engine: paye.ts, ssnit.ts, salary.ts
+lib/calculations/       pure engine: paye.ts, ssnit.ts, salary.ts, net-to-gross.ts
 lib/validation/         Zod schema for form input
 lib/money.ts            pesewa parsing, rounding, GH₵ formatting
 tests/                  engine, config, validation and calculator integration tests
@@ -47,6 +47,10 @@ tests/                  engine, config, validation and calculator integration te
 6. Net = gross − SSNIT − PAYE (− bonus tax in the annual view). Annual SSNIT/PAYE = 12 × monthly; annual gross stays exactly as entered.
 
 The result includes per-band PAYE detail, SSNIT base/cap, bonus split, effective rates, the ruleset used (id, dates, verification status, notice, sources), assumptions and exclusions.
+
+### Net to gross
+
+`netToGross(input)` binary-searches the smallest monthly basic salary whose forward-calculated take-home pay reaches the target. Monthly take-home pay never decreases and rises by at most one pesewa per pesewa of basic salary, so the result hits the target exactly (unless fixed allowances alone exceed it). Annual targets are split into 12 months, rounded up, so the annual take-home pay may exceed the target by up to 11 pesewas.
 
 ### Rounding policy
 
@@ -81,6 +85,7 @@ Google Analytics 4 loads only when `NEXT_PUBLIC_GA_MEASUREMENT_ID` is set (via `
 | `calculator_opened` | — |
 | `salary_period_selected` | `period` |
 | `calculation_completed` (once per visit) | `period`, `has_allowances`, `has_bonus`, `tax_rules` |
+| `net_to_gross_completed` (once per visit) | `period`, `has_allowances`, `tax_rules` |
 
 Salary values never appear in URLs or events; `tests/analytics.test.tsx` enforces this.
 

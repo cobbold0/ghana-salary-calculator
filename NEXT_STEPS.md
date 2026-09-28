@@ -20,7 +20,6 @@
 - Personal reliefs (marriage/responsibility, child education, aged dependant, disability, old age) as optional inputs, once rules are verified.
 - Voluntary Tier 3 contributions and their tax deductibility limit.
 - Salary comparison (two offers side by side).
-- Net-to-gross (reverse) calculator.
 - Detailed payslip calculator (benefits in kind, overtime).
 - Employer view (employer SSNIT, total cost of employment).
 - Downloadable/printable salary breakdown.
@@ -37,6 +36,7 @@
 - Mobile-first calculator UI: live results, monthly/annual view toggle, progressive disclosure for allowances/bonus/tax year, visual breakdown bar, PAYE/SSNIT/bonus explanations, rules and limitations notice. Checked at 390px and 1280px, light and dark, no horizontal overflow, no console errors.
 - SEO pages: `/`, `/salary-calculator`, `/ghana-salary-calculator`, `/take-home-pay`, `/gross-to-net`, `/paye-calculator`, `/ssnit-calculator`, `/salary-breakdown`, `/salary-guide`, plus `/privacy`; unique titles, descriptions, canonicals, Open Graph, one H1 each; WebApplication and BreadcrumbList JSON-LD (no ratings/reviews); worked examples and rate tables generated from the engine/config.
 - `sitemap.xml` and `robots.txt`.
+- Net-to-gross calculator at `/net-to-gross`: exact binary-search solver on the same engine, fixed allowances, monthly/annual targets, full breakdown; linked from gross-to-net and salary guide pages.
 - Google Analytics 4 (off until a measurement ID is set) with anonymous events only; test proves no salary amounts are sent.
 - Ad slot component (off by default), placed only in content areas away from the calculator.
-- 97 tests (analytics privacy, engine, rounding, boundaries, SSNIT cap, bonuses, annual/monthly, tax-year changes, config validation, input validation, calculator integration) — passing. Lint, typecheck and production build passing.
+- 114 tests (net-to-gross solver and UI, analytics privacy, engine, rounding, boundaries, SSNIT cap, bonuses, annual/monthly, tax-year changes, config validation, input validation, calculator integration) — passing. Lint, typecheck and production build passing.
