@@ -2,7 +2,7 @@ import { GA_ID } from "./analytics";
 
 export const CONSENT_KEY = "gsc:consent:v1";
 export const CONSENT_EVENT = "gsc:open-consent";
-export const ADSENSE_CLIENT = process.env.NEXT_PUBLIC_ADSENSE_CLIENT;
+export const ADSENSE_CLIENT = process.env.NEXT_PUBLIC_ADSENSE_CLIENT || "ca-pub-5952797612434262";
 /** The banner only matters when a Google tag that uses cookies is configured. */
 export const CONSENT_NEEDED = Boolean(GA_ID || ADSENSE_CLIENT);
 
