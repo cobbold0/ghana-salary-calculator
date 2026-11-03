@@ -59,6 +59,12 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             strategy="afterInteractive"
           />
         )}
+        {MONETIZATION.astraSocialBarUrl && (
+          <Script
+            src={MONETIZATION.astraSocialBarUrl}
+            strategy="afterInteractive"
+          />
+        )}
       </body>
       {GA_ID && <GoogleAnalytics gaId={GA_ID} />}
     </html>

@@ -2,6 +2,8 @@
 
 import React, { useEffect } from "react";
 import { AdSlot } from "@/components/site/AdSlot";
+import { AstraBanner } from "@/components/ads/AstraBanner";
+import { AstraNativeBanner } from "@/components/ads/AstraNativeBanner";
 
 interface AdGatedDownloadModalProps {
   isOpen: boolean;
@@ -64,8 +66,9 @@ export function AdGatedDownloadModal({
         </div>
 
         {/* High-Impression In-Modal Ad Slot */}
-        <div className="my-5 rounded-xl border border-border bg-background/50 p-2 overflow-hidden text-center min-h-[250px] flex flex-col items-center justify-center">
-          <AdSlot variant="inline" label="Sponsored" className="my-0" />
+        <div className="my-4 flex flex-col items-center justify-center space-y-3">
+          <AstraBanner size="300x250" label="Sponsored Offer" />
+          <AstraNativeBanner label="Recommended" className="my-0" />
         </div>
 
         {/* Final Download Button */}

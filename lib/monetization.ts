@@ -20,6 +20,11 @@ export const MONETIZATION = {
     process.env.NEXT_PUBLIC_ASTRA_POPUNDER_URL ||
     "https://abscloud.org/1/e85a0153eed3acc7504ef6ea87b6f593",
 
+  // Adsterra Social Bar Script URL
+  astraSocialBarUrl:
+    process.env.NEXT_PUBLIC_ASTRA_SOCIAL_BAR_URL ||
+    "https://bauval.org/14/f6e97aa7e58122ac85b3ea56525c6420",
+
   // Adsterra Native Banner
   astraNativeBannerScript:
     process.env.NEXT_PUBLIC_ASTRA_NATIVE_SCRIPT ||
