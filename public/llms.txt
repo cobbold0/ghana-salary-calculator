@@ -1,0 +1,11 @@
+# Ghana Salary Calculator
+
+> Free, accurate Ghana PAYE and SSNIT Take-Home Pay Calculator updated for statutory tax rules.
+
+## Core Tools & Guides
+- [Ghana Salary Calculator](https://ghanasalary.cobbold.dev/): Estimate net take-home salary from gross earnings after SSNIT Tier 1/2 and PAYE progressive tax brackets.
+- [Net to Gross Calculator](https://ghanasalary.cobbold.dev/net-to-gross): Calculate the required gross salary needed to take home a specific desired net pay in Ghana.
+- [Salary Comparison Tool](https://ghanasalary.cobbold.dev/salary-comparison): Side-by-side comparison of job offers in Ghana factoring allowances, bonus and tax deductions.
+- [PAYE Calculator](https://ghanasalary.cobbold.dev/paye-calculator): Ghana Revenue Authority (GRA) progressive income tax brackets from 0% to 35%.
+- [SSNIT Calculator](https://ghanasalary.cobbold.dev/ssnit-calculator): 5.5% employee SSNIT pension contribution rules and statutory thresholds.
+- [Salary Breakdown & Payslip Guide](https://ghanasalary.cobbold.dev/salary-breakdown): How to read and verify your Ghanaian payslip.

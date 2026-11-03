@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import Script from "next/script";
+import { AdRailsLayout } from "@/components/ads/AdRailsLayout";
 import { ConsentBanner } from "@/components/site/ConsentBanner";
 import { SiteFooter } from "@/components/site/SiteFooter";
 import { SiteHeader } from "@/components/site/SiteHeader";
@@ -36,8 +37,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           Skip to content
         </a>
         <SiteHeader />
-        <main id="main" className="mx-auto w-full max-w-5xl flex-1 px-4 pb-16 pt-6 sm:pt-10">
-          {children}
+        <main id="main" className="mx-auto w-full flex-1 pb-16 pt-4 sm:pt-6">
+          <AdRailsLayout>{children}</AdRailsLayout>
         </main>
         <SiteFooter />
         <ConsentBanner />
