@@ -1,10 +1,9 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ADSENSE_CLIENT as client } from "@/lib/consent";
 
-const defaultSlot = process.env.NEXT_PUBLIC_ADSENSE_SLOT;
-const showPlaceholders = process.env.NEXT_PUBLIC_AD_PLACEHOLDERS === "true" || process.env.NODE_ENV === "development";
+const defaultSlot = process.env.NEXT_PUBLIC_ADSENSE_SLOT || "1273092714";
 
 interface AdSlotProps {
   variant?: "banner" | "sidebar" | "inline";
@@ -14,11 +13,13 @@ interface AdSlotProps {
 }
 
 /**
- * A clearly labelled responsive Google AdSense unit.
+ * Clearly labelled responsive Google AdSense unit for Ghana Salary Calculator.
  * Supports:
  * - "banner": leaderboard (top/bottom of pages)
  * - "sidebar": vertical skyscraper for left and right rails
  * - "inline": in-content rectangle
+ *
+ * Unfilled ads collapse cleanly without showing broken placeholder texts.
  */
 export function AdSlot({
   variant = "inline",
@@ -27,15 +28,28 @@ export function AdSlot({
   label = "Advertisement",
 }: AdSlotProps) {
   const ref = useRef<HTMLModElement>(null);
-  const isConfigured = Boolean(client && slot);
+  const activeClient = client || "ca-pub-5952797612434262";
+  const activeSlot = slot || defaultSlot;
+  const isConfigured = Boolean(activeClient && activeSlot);
+  const [isUnfilled, setIsUnfilled] = useState(false);
 
   useEffect(() => {
     if (!isConfigured || !ref.current || ref.current.dataset.adsbygoogleStatus) return;
     try {
       (window.adsbygoogle = window.adsbygoogle || []).push({});
     } catch {
-      // Ad blockers or script failure must never break the page
+      // Ad blockers or network failure
     }
+
+    const ins = ref.current;
+    if (!ins) return;
+    const observer = new MutationObserver(() => {
+      if (ins.getAttribute("data-ad-status") === "unfilled") {
+        setIsUnfilled(true);
+      }
+    });
+    observer.observe(ins, { attributes: true, attributeFilter: ["data-ad-status"] });
+    return () => observer.disconnect();
   }, [isConfigured]);
 
   const variantStyles = {
@@ -44,50 +58,30 @@ export function AdSlot({
     inline: "w-full my-8 min-h-[250px] text-center",
   };
 
-  if (isConfigured) {
-    return (
-      <aside
-        aria-label={label}
-        className={`print:hidden overflow-hidden ${variantStyles[variant]} ${className}`}
-      >
-        <p className="mb-1.5 text-center text-[10px] font-semibold tracking-wider text-muted uppercase">
-          {label}
-        </p>
-        <ins
-          ref={ref}
-          className="adsbygoogle block"
-          style={{
-            display: "block",
-            minHeight: variant === "sidebar" ? 600 : variant === "banner" ? 90 : 250,
-          }}
-          data-ad-client={client}
-          data-ad-slot={slot}
-          data-ad-format={variant === "sidebar" ? "vertical" : "auto"}
-          data-full-width-responsive={variant !== "sidebar" ? "true" : "false"}
-        />
-      </aside>
-    );
+  if (!isConfigured || isUnfilled) {
+    return null;
   }
 
-  if (showPlaceholders) {
-    return (
-      <aside
-        aria-label={`${label} Placeholder`}
-        className={`print:hidden rounded-lg border border-dashed border-border/80 bg-muted/5 p-2 text-center ${variantStyles[variant]} ${className}`}
-      >
-        <p className="mb-1 text-[10px] font-semibold tracking-wider text-muted uppercase">
-          {label} {variant === "sidebar" ? "(Skyscraper)" : variant === "banner" ? "(Leaderboard)" : "(In-Content)"}
-        </p>
-        <div
-          className={`flex w-full items-center justify-center rounded bg-muted/10 text-xs font-medium text-muted/80 ${
-            variant === "sidebar" ? "h-[560px]" : variant === "banner" ? "h-[80px]" : "h-[220px]"
-          }`}
-        >
-          Google AdSense Slot
-        </div>
-      </aside>
-    );
-  }
-
-  return null;
+  return (
+    <aside
+      aria-label={label}
+      className={`print:hidden overflow-hidden transition-all duration-300 ${variantStyles[variant]} ${className}`}
+    >
+      <p className="mb-1 text-center text-[9px] font-medium tracking-wider text-muted uppercase select-none">
+        {label}
+      </p>
+      <ins
+        ref={ref}
+        className="adsbygoogle block"
+        style={{
+          display: "block",
+          minHeight: variant === "sidebar" ? 600 : variant === "banner" ? 90 : 250,
+        }}
+        data-ad-client={activeClient}
+        data-ad-slot={activeSlot}
+        data-ad-format={variant === "sidebar" ? "vertical" : "auto"}
+        data-full-width-responsive={variant !== "sidebar" ? "true" : "false"}
+      />
+    </aside>
+  );
 }

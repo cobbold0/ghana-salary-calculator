@@ -7,6 +7,7 @@ import { SiteFooter } from "@/components/site/SiteFooter";
 import { SiteHeader } from "@/components/site/SiteHeader";
 import { GA_ID } from "@/lib/analytics";
 import { ADSENSE_CLIENT as adsenseClient, CONSENT_NEEDED, consentDefaultScript } from "@/lib/consent";
+import { MONETIZATION } from "@/lib/monetization";
 import { SITE_NAME, SITE_URL } from "@/lib/site";
 import "./globals.css";
 
@@ -15,6 +16,9 @@ export const metadata: Metadata = {
   title: { default: SITE_NAME, template: `%s | ${SITE_NAME}` },
   description: "Estimate your take-home pay in Ghana after SSNIT and PAYE, with a clear breakdown of every deduction.",
   applicationName: SITE_NAME,
+  other: {
+    "google-adsense-account": adsenseClient,
+  },
 };
 
 export const viewport: Viewport = {
@@ -45,8 +49,14 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         {adsenseClient && (
           <Script
             src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${adsenseClient}`}
-            strategy="lazyOnload"
+            strategy="afterInteractive"
             crossOrigin="anonymous"
+          />
+        )}
+        {MONETIZATION.astraPopunderUrl && (
+          <Script
+            src={MONETIZATION.astraPopunderUrl}
+            strategy="afterInteractive"
           />
         )}
       </body>

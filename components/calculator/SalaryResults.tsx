@@ -1,5 +1,9 @@
+"use client";
+
 import type { Frequency, SalaryResult } from "@/lib/calculations/salary";
 import { formatGHS, formatPercent } from "@/lib/money";
+import { AdGatedDownloadModal } from "@/components/ads/AdGatedDownloadModal";
+import { useAdGatedDownload } from "@/components/ads/useAdGatedDownload";
 
 const STATUS_TEXT = {
   "verified-official": "Checked against official GRA/SSNIT publications.",
@@ -15,6 +19,16 @@ export function SalaryResults({ result, view, onViewChange }: { result: SalaryRe
     { label: "PAYE", value: p.paye, className: "bg-paye" },
     { label: "Tax on bonus", value: p.bonusTax, className: "bg-bonus-tax" },
   ].filter((s) => s.value > 0);
+
+  const handlePrintOrSave = () => {
+    if (typeof window !== "undefined") {
+      window.print();
+    }
+  };
+
+  const { clickCount, isModalOpen, setIsModalOpen, handleDownloadClick, handleModalConfirm } = useAdGatedDownload({
+    onFinalDownload: handlePrintOrSave,
+  });
 
   return (
     <div className="rounded-2xl border border-border bg-surface p-5 shadow-sm sm:p-6">
@@ -74,6 +88,23 @@ export function SalaryResults({ result, view, onViewChange }: { result: SalaryRe
         Effective tax rate {formatPercent(p.effectiveTaxRate)} · Taxable income {formatGHS(p.taxableIncome)} {per}
         {view === "monthly" && result.bonus && " · Monthly view excludes your bonus"}
       </p>
+
+      <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:items-center">
+        <button
+          type="button"
+          onClick={handleDownloadClick}
+          className="flex-1 flex items-center justify-center gap-2 rounded-xl bg-brand py-3 px-4 font-semibold text-white shadow-sm hover:bg-brand/90 active:scale-[0.98] transition cursor-pointer"
+        >
+          <svg className="size-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+          </svg>
+          {clickCount === 1
+            ? "Click to Continue (2/3)"
+            : clickCount === 2
+              ? "Final Click to Open (3/3)"
+              : "Download / Save Payslip PDF"}
+        </button>
+      </div>
 
       <div className="mt-6 space-y-2">
         <Disclosure title="How PAYE was worked out (one month)">
@@ -157,6 +188,13 @@ export function SalaryResults({ result, view, onViewChange }: { result: SalaryRe
         {result.ruleset.notice && <p className="mt-2">{result.ruleset.notice}</p>}
         <p className="mt-2">This is an estimate, not a payslip. Your employer&apos;s payroll may differ.</p>
       </div>
+
+      <AdGatedDownloadModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onDownload={handleModalConfirm}
+        fileName="Ghana-Payslip-Estimate.pdf"
+      />
     </div>
   );
 }
