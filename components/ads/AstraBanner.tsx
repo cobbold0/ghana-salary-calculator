@@ -2,7 +2,7 @@
 
 import React from "react";
 
-export type AstraBannerSize = "160x600" | "728x90" | "300x250" | "320x50";
+export type AstraBannerSize = "160x300" | "160x600" | "728x90" | "300x250" | "320x50" | "468x60";
 
 interface AstraBannerProps {
   size: AstraBannerSize;
@@ -11,25 +11,36 @@ interface AstraBannerProps {
 }
 
 const BANNER_CONFIG: Record<AstraBannerSize, { key: string; width: number; height: number }> = {
-  "160x600": {
-    key: "3f7f4bfed4336e5bee560436a03b3b7b",
+  "160x300": {
+    key: "e993e4d2b74ba044e46d5fca879458d2",
     width: 160,
-    height: 600,
+    height: 300,
+  },
+  "160x600": {
+    // If 160x300 is provided, use 160x300 key or 160x600
+    key: "e993e4d2b74ba044e46d5fca879458d2",
+    width: 160,
+    height: 300,
   },
   "728x90": {
-    key: "04b46be57c8cbc8354f72ea99016791f",
+    key: "f839241a26b9224c882f3df6008fb572",
     width: 728,
     height: 90,
   },
+  "320x50": {
+    key: "b7daa77eca6cdce7b3e9e08a61668b6b",
+    width: 320,
+    height: 50,
+  },
   "300x250": {
-    key: "ddc7513063f0687a87212faf79c05e3c",
+    key: "5278df92957b951cf37de97e6a3d3d6d",
     width: 300,
     height: 250,
   },
-  "320x50": {
-    key: "6c514193a9c4781dc2637fbfcdf1ffe0",
-    width: 320,
-    height: 50,
+  "468x60": {
+    key: "33eaab05caec97d15f1d5cfe4540d4e8",
+    width: 468,
+    height: 60,
   },
 };
 
