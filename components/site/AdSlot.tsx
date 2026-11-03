@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { ADSENSE_CLIENT as client } from "@/lib/consent";
 
-const defaultSlot = process.env.NEXT_PUBLIC_ADSENSE_SLOT || "1273092714";
+const defaultSlot = "1273092714";
 
 interface AdSlotProps {
   variant?: "banner" | "sidebar" | "inline";
